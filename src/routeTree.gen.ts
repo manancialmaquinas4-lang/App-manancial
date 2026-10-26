@@ -10,33 +10,168 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthenticatedGarantiasRouteImport } from './routes/_authenticated.garantias'
+import { Route as AuthenticatedPagamentosRouteImport } from './routes/_authenticated.pagamentos'
+import { Route as AuthenticatedClientesIndexRouteImport } from './routes/_authenticated.clientes.index'
+import { Route as AuthenticatedClientesIdRouteImport } from './routes/_authenticated.clientes.$id'
+import { Route as AuthenticatedOsIndexRouteImport } from './routes/_authenticated.os.index'
+import { Route as AuthenticatedOsIdRouteImport } from './routes/_authenticated.os.$id'
+import { Route as AuthenticatedOsNovaRouteImport } from './routes/_authenticated.os.nova'
+import { Route as AuthenticatedOsEditarIdRouteImport } from './routes/_authenticated.os.editar.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedGarantiasRoute = AuthenticatedGarantiasRouteImport.update({
+  id: '/garantias',
+  path: '/garantias',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedPagamentosRoute = AuthenticatedPagamentosRouteImport.update({
+  id: '/pagamentos',
+  path: '/pagamentos',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedClientesIndexRoute =
+  AuthenticatedClientesIndexRouteImport.update({
+    id: '/clientes/',
+    path: '/clientes/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedClientesIdRoute = AuthenticatedClientesIdRouteImport.update({
+  id: '/clientes/$id',
+  path: '/clientes/$id',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedOsIndexRoute = AuthenticatedOsIndexRouteImport.update({
+  id: '/os/',
+  path: '/os/',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedOsIdRoute = AuthenticatedOsIdRouteImport.update({
+  id: '/os/$id',
+  path: '/os/$id',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedOsNovaRoute = AuthenticatedOsNovaRouteImport.update({
+  id: '/os/nova',
+  path: '/os/nova',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedOsEditarIdRoute = AuthenticatedOsEditarIdRouteImport.update({
+  id: '/os/editar/$id',
+  path: '/os/editar/$id',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/garantias': typeof AuthenticatedGarantiasRoute
+  '/pagamentos': typeof AuthenticatedPagamentosRoute
+  '/clientes/$id': typeof AuthenticatedClientesIdRoute
+  '/os/$id': typeof AuthenticatedOsIdRoute
+  '/os/nova': typeof AuthenticatedOsNovaRoute
+  '/clientes/': typeof AuthenticatedClientesIndexRoute
+  '/os/': typeof AuthenticatedOsIndexRoute
+  '/os/editar/$id': typeof AuthenticatedOsEditarIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/garantias': typeof AuthenticatedGarantiasRoute
+  '/pagamentos': typeof AuthenticatedPagamentosRoute
+  '/clientes/$id': typeof AuthenticatedClientesIdRoute
+  '/os/$id': typeof AuthenticatedOsIdRoute
+  '/os/nova': typeof AuthenticatedOsNovaRoute
+  '/clientes': typeof AuthenticatedClientesIndexRoute
+  '/os': typeof AuthenticatedOsIndexRoute
+  '/os/editar/$id': typeof AuthenticatedOsEditarIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/garantias': typeof AuthenticatedGarantiasRoute
+  '/_authenticated/pagamentos': typeof AuthenticatedPagamentosRoute
+  '/_authenticated/clientes/$id': typeof AuthenticatedClientesIdRoute
+  '/_authenticated/os/$id': typeof AuthenticatedOsIdRoute
+  '/_authenticated/os/nova': typeof AuthenticatedOsNovaRoute
+  '/_authenticated/clientes/': typeof AuthenticatedClientesIndexRoute
+  '/_authenticated/os/': typeof AuthenticatedOsIndexRoute
+  '/_authenticated/os/editar/$id': typeof AuthenticatedOsEditarIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/reset-password'
+    | '/garantias'
+    | '/pagamentos'
+    | '/clientes/$id'
+    | '/os/$id'
+    | '/os/nova'
+    | '/clientes/'
+    | '/os/'
+    | '/os/editar/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/reset-password'
+    | '/garantias'
+    | '/pagamentos'
+    | '/clientes/$id'
+    | '/os/$id'
+    | '/os/nova'
+    | '/clientes'
+    | '/os'
+    | '/os/editar/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/login'
+    | '/reset-password'
+    | '/_authenticated/garantias'
+    | '/_authenticated/pagamentos'
+    | '/_authenticated/clientes/$id'
+    | '/_authenticated/os/$id'
+    | '/_authenticated/os/nova'
+    | '/_authenticated/clientes/'
+    | '/_authenticated/os/'
+    | '/_authenticated/os/editar/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +183,117 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/garantias': {
+      id: '/_authenticated/garantias'
+      path: '/garantias'
+      fullPath: '/garantias'
+      preLoaderRoute: typeof AuthenticatedGarantiasRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/pagamentos': {
+      id: '/_authenticated/pagamentos'
+      path: '/pagamentos'
+      fullPath: '/pagamentos'
+      preLoaderRoute: typeof AuthenticatedPagamentosRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/clientes/': {
+      id: '/_authenticated/clientes/'
+      path: '/clientes'
+      fullPath: '/clientes/'
+      preLoaderRoute: typeof AuthenticatedClientesIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/clientes/$id': {
+      id: '/_authenticated/clientes/$id'
+      path: '/clientes/$id'
+      fullPath: '/clientes/$id'
+      preLoaderRoute: typeof AuthenticatedClientesIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/os/': {
+      id: '/_authenticated/os/'
+      path: '/os'
+      fullPath: '/os/'
+      preLoaderRoute: typeof AuthenticatedOsIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/os/$id': {
+      id: '/_authenticated/os/$id'
+      path: '/os/$id'
+      fullPath: '/os/$id'
+      preLoaderRoute: typeof AuthenticatedOsIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/os/nova': {
+      id: '/_authenticated/os/nova'
+      path: '/os/nova'
+      fullPath: '/os/nova'
+      preLoaderRoute: typeof AuthenticatedOsNovaRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/os/editar/$id': {
+      id: '/_authenticated/os/editar/$id'
+      path: '/os/editar/$id'
+      fullPath: '/os/editar/$id'
+      preLoaderRoute: typeof AuthenticatedOsEditarIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedGarantiasRoute: typeof AuthenticatedGarantiasRoute
+  AuthenticatedPagamentosRoute: typeof AuthenticatedPagamentosRoute
+  AuthenticatedClientesIdRoute: typeof AuthenticatedClientesIdRoute
+  AuthenticatedOsIdRoute: typeof AuthenticatedOsIdRoute
+  AuthenticatedOsNovaRoute: typeof AuthenticatedOsNovaRoute
+  AuthenticatedClientesIndexRoute: typeof AuthenticatedClientesIndexRoute
+  AuthenticatedOsIndexRoute: typeof AuthenticatedOsIndexRoute
+  AuthenticatedOsEditarIdRoute: typeof AuthenticatedOsEditarIdRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedGarantiasRoute: AuthenticatedGarantiasRoute,
+  AuthenticatedPagamentosRoute: AuthenticatedPagamentosRoute,
+  AuthenticatedClientesIdRoute: AuthenticatedClientesIdRoute,
+  AuthenticatedOsIdRoute: AuthenticatedOsIdRoute,
+  AuthenticatedOsNovaRoute: AuthenticatedOsNovaRoute,
+  AuthenticatedClientesIndexRoute: AuthenticatedClientesIndexRoute,
+  AuthenticatedOsIndexRoute: AuthenticatedOsIndexRoute,
+  AuthenticatedOsEditarIdRoute: AuthenticatedOsEditarIdRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  LoginRoute: LoginRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
