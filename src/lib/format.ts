@@ -80,7 +80,7 @@ export function calcularTotal(v: {
 
 /** Vencimento = data de início + prazo em dias (mesma regra do banco). */
 export function calcularVencimento(inicioISO: string, prazoDias: number) {
-  const [y, m, d] = inicioISO.split("-").map(Number);
+  const [y = 0, m = 1, d = 1] = inicioISO.split("-").map(Number);
   const dt = new Date(Date.UTC(y, m - 1, d + prazoDias));
   return dt.toISOString().slice(0, 10);
 }

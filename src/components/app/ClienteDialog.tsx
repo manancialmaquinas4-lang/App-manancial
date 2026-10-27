@@ -47,7 +47,7 @@ export function ClienteDialog({ open, onOpenChange, cliente, onSaved }: { open: 
   async function salvar(e: React.FormEvent) {
     e.preventDefault();
     const p = schema.safeParse(f);
-    if (!p.success) return toast.error(p.error.issues[0].message);
+    if (!p.success) return toast.error(p.error.issues[0]?.message ?? "Dados inválidos");
     const v = p.data;
     const whatsapp = normalizarWhatsapp(v.whatsapp || v.telefone);
     const row = { ...v, whatsapp: whatsapp || null, cpf_cnpj: v.cpf_cnpj.replace(/\D/g, "") || null, estado: v.estado.toUpperCase() };
