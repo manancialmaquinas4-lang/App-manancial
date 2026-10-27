@@ -54,7 +54,7 @@ const empty = {
 };
 type Form = typeof empty;
 
-export function OSForm({ existing, duplicarDe }: { existing?: OS; duplicarDe?: OS }) {
+export function OSForm({ existing, duplicarDe }: { existing?: OS | undefined; duplicarDe?: OS | undefined }) {
   const nav = useNavigate();
   const { canFinance } = useAuth();
   const [f, setF] = useState<Form>(empty);
