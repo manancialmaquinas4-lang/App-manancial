@@ -1,6 +1,10 @@
-import type { ReactNode } from "react";
+import { forwardRef, useState, type ComponentProps, type ReactNode } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 import { STATUS_PAGAMENTO, STATUS_SERVICO, type StatusPagamento, type StatusServico, type SituacaoGarantia } from "@/lib/format";
+
+type InputProps = ComponentProps<typeof Input>;
 
 export function PageHeader({ title, subtitle, actions }: { title: string; subtitle?: string; actions?: ReactNode }) {
   return (
@@ -74,3 +78,24 @@ export function Field({ label, children, className, required }: { label: string;
 
 export const selectCls =
   "h-9 w-full rounded-md border border-input bg-card px-3 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring";
+
+export const PasswordInput = forwardRef<HTMLInputElement, InputProps>(({ className, ...props }, ref) => {
+  const [show, setShow] = useState(false);
+  return (
+    <div className="relative">
+      <Input ref={ref} type={show ? "text" : "password"} className={cn("pr-9", className)} {...props} />
+      <button
+        type="button"
+        onClick={() => setShow((v) => !v)}
+        aria-label={show ? "Ocultar senha" : "Mostrar senha"}
+        aria-pressed={show}
+        title={show ? "Ocultar senha" : "Mostrar senha"}
+        className="absolute right-0 top-0 flex h-full w-9 items-center justify-center rounded-r-md text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+      >
+        {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+      </button>
+    </div>
+  );
+});
+PasswordInput.displayName = "PasswordInput";
+

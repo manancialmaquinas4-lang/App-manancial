@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Field } from "@/components/app/ui-bits";
+import { Field, PasswordInput } from "@/components/app/ui-bits";
 import logo from "@/assets/logo-manancial.png";
 
 export const Route = createFileRoute("/login")({
@@ -95,7 +95,7 @@ function Login() {
           </Field>
           {mode !== "recuperar" && (
             <Field label="Senha" required>
-              <Input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} required autoComplete="current-password" />
+              <PasswordInput value={senha} onChange={(e) => setSenha(e.target.value)} required autoComplete="current-password" />
             </Field>
           )}
           <Button type="submit" variant="accent" size="lg" className="w-full" disabled={busy}>
