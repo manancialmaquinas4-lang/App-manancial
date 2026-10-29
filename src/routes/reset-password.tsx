@@ -3,8 +3,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Field } from "@/components/app/ui-bits";
+import { Field, PasswordInput } from "@/components/app/ui-bits";
 
 export const Route = createFileRoute("/reset-password")({
   head: () => ({
@@ -34,7 +33,7 @@ function Reset() {
       <form onSubmit={submit} className="w-full max-w-sm space-y-4 rounded-2xl bg-card p-6 shadow-card">
         <h1 className="text-xl font-bold">Definir nova senha</h1>
         <Field label="Nova senha" required>
-          <Input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
+          <PasswordInput value={senha} onChange={(e) => setSenha(e.target.value)} />
         </Field>
         <Button type="submit" variant="accent" className="w-full">Salvar</Button>
       </form>
