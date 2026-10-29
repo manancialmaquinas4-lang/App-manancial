@@ -15,6 +15,8 @@ export const Route = createFileRoute("/login")({
       { name: "description", content: "Acesso restrito à equipe da Manancial Máquinas." },
       { property: "og:title", content: "Entrar — Manancial Máquinas" },
       { property: "og:description", content: "Acesso restrito à equipe." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Login,
@@ -25,7 +27,6 @@ function Login() {
   const [mode, setMode] = useState<"entrar" | "criar" | "recuperar">("entrar");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [nome, setNome] = useState("");
   const [busy, setBusy] = useState(false);
 
   if (!loading && session) return <Navigate to="/painel" />;
@@ -39,13 +40,13 @@ function Login() {
         if (error) throw new Error(error.message === "Invalid login credentials" ? "E-mail ou senha incorretos." : error.message);
       } else if (mode === "criar") {
         if (senha.length < 8) throw new Error("A senha precisa ter pelo menos 8 caracteres.");
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password: senha,
-          options: { data: { nome }, emailRedirectTo: `${window.location.origin}/painel` },
+          options: { emailRedirectTo: `${window.location.origin}/login` },
         });
         if (error) throw error;
-        toast.success("Conta criada! Confirme o e-mail recebido. O administrador precisa liberar seu acesso.");
+        toast.success(data.session ? "Cadastro realizado!" : "Cadastro realizado! Confirme seu e-mail para entrar, sem precisar de aprovação.");
         setMode("entrar");
       } else {
         const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/reset-password` });
@@ -81,21 +82,16 @@ function Login() {
         <form onSubmit={submit} className="space-y-4 rounded-2xl bg-card p-6 shadow-card sm:p-8">
           <div>
             <h1 className="text-xl font-bold">
-              {mode === "entrar" ? "Acessar o sistema" : mode === "criar" ? "Solicitar acesso" : "Recuperar senha"}
+              {mode === "entrar" ? "Acessar o sistema" : mode === "criar" ? "Cadastrar" : "Recuperar senha"}
             </h1>
             <p className="text-sm text-muted-foreground">Gestão de Serviços Técnicos</p>
           </div>
-          {mode === "criar" && (
-            <Field label="Nome completo" required>
-              <Input value={nome} onChange={(e) => setNome(e.target.value)} required maxLength={100} />
-            </Field>
-          )}
           <Field label="E-mail" required>
             <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="email" />
           </Field>
           {mode !== "recuperar" && (
             <Field label="Senha" required>
-              <PasswordInput value={senha} onChange={(e) => setSenha(e.target.value)} required autoComplete="current-password" />
+              <PasswordInput value={senha} onChange={(e) => setSenha(e.target.value)} required minLength={mode === "criar" ? 8 : undefined} autoComplete={mode === "criar" ? "new-password" : "current-password"} />
             </Field>
           )}
           <Button type="submit" variant="accent" size="lg" className="w-full" disabled={busy}>
@@ -103,17 +99,17 @@ function Login() {
           </Button>
           <div className="flex flex-wrap justify-between gap-2 text-sm">
             {mode !== "entrar" ? (
-              <button type="button" className="text-primary hover:underline" onClick={() => setMode("entrar")}>
+              <Button type="button" variant="link" className="h-auto p-0" onClick={() => setMode("entrar")}>
                 Voltar ao login
-              </button>
+              </Button>
             ) : (
               <>
-                <button type="button" className="text-primary hover:underline" onClick={() => setMode("recuperar")}>
+                <Button type="button" variant="link" className="h-auto p-0" onClick={() => setMode("recuperar")}>
                   Esqueci minha senha
-                </button>
-                <button type="button" className="text-primary hover:underline" onClick={() => setMode("criar")}>
-                  Solicitar acesso
-                </button>
+                </Button>
+                <Button type="button" variant="link" className="h-auto p-0" onClick={() => setMode("criar")}>
+                  Cadastrar
+                </Button>
               </>
             )}
           </div>
