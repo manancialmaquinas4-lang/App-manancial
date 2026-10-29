@@ -96,11 +96,11 @@ function Layout() {
       <div className="grid min-h-screen place-items-center bg-gradient-navy px-4">
         <div className="max-w-md rounded-2xl bg-card p-8 text-center shadow-card">
           <img src={logo} alt="Manancial Máquinas" className="mx-auto mb-4 w-48" />
-          <h1 className="text-xl font-bold">Acesso aguardando liberação</h1>
+          <h1 className="text-xl font-bold">Acesso indisponível</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             {profile?.ativo === false
               ? "Seu usuário foi desativado."
-              : "Sua conta foi criada. Peça ao administrador para definir seu perfil (Técnico ou Atendimento)."}
+              : "Não foi possível carregar seu acesso. Tente sair e entrar novamente."}
           </p>
           <Button className="mt-6" variant="outline" onClick={signOut}>Sair</Button>
         </div>

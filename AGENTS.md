@@ -12,3 +12,4 @@
 ## Architecture
 - Data access is client-side via the Supabase browser client with RLS (`is_staff`/`has_role`/`can_finance`); business rules (OS total, payment status, completion validation, warranty creation, audit) live in DB triggers so every client obeys them.
 - Protected pages live under `src/routes/_authenticated.*` (client-side guard in the layout); PDFs are generated in-browser with jsPDF (`src/lib/pdf.ts`) from saved DB data and archived in the private `documentos` bucket with versioned rows in `documentos_servico`.
+- Signup role assignment is enforced by the database trigger: new accounts receive only the technician role, never automatic admin or finance privileges, so self-registration cannot elevate access.
