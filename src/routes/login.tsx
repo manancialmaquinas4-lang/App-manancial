@@ -54,7 +54,21 @@ function Login() {
         setMode("entrar");
       }
     } catch (err) {
-      toast.error((err as Error).message);
+      const e = err as Error & { code?: string };
+      const m = e.message || "";
+      const msg =
+        e.code === "weak_password" || /weak|pwned|easy to guess/i.test(m)
+          ? "Essa senha é fraca ou já vazou na internet. Escolha outra, misturando letras, números e símbolos."
+          : /already registered|already exists/i.test(m)
+            ? "Este e-mail já tem cadastro. Use “Entrar” ou “Esqueci minha senha”."
+            : /email not confirmed/i.test(m)
+              ? "Confirme seu e-mail pelo link que enviamos antes de entrar."
+              : /invalid.*email/i.test(m)
+                ? "E-mail inválido."
+                : /rate limit|too many/i.test(m)
+                  ? "Muitas tentativas. Aguarde alguns minutos e tente de novo."
+                  : m;
+      toast.error(msg);
     } finally {
       setBusy(false);
     }
