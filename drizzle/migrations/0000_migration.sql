@@ -267,5 +267,9 @@ end $$;
 create trigger t_aud_os after insert or update or delete on public.ordens_servico for each row execute function public.auditar();
 create trigger t_aud_cli after insert or update or delete on public.clientes for each row execute function public.auditar();
 
+insert into storage.buckets (id, name, public)
+values ('documentos', 'documentos', false)
+on conflict (id) do update set public = false;
+
 create policy "staff le docs" on storage.objects for select to authenticated using (bucket_id = 'documentos' and public.is_staff(auth.uid()));
 create policy "staff envia docs" on storage.objects for insert to authenticated with check (bucket_id = 'documentos' and public.is_staff(auth.uid()));

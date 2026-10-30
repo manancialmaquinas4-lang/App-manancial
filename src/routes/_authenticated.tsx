@@ -1,5 +1,15 @@
 import { createFileRoute, Link, Navigate, Outlet, useRouterState } from "@tanstack/react-router";
-import { BarChart3, ClipboardList, CreditCard, LayoutDashboard, LogOut, Settings, ShieldCheck, UserCog, Users } from "lucide-react";
+import {
+  BarChart3,
+  ClipboardList,
+  CreditCard,
+  LayoutDashboard,
+  LogOut,
+  Settings,
+  ShieldCheck,
+  UserCog,
+  Users,
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -44,7 +54,9 @@ function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="border-b border-sidebar-border">
         {collapsed ? (
-          <div className="grid h-10 place-items-center font-display text-lg font-extrabold text-sidebar-primary">M</div>
+          <div className="grid h-10 place-items-center font-display text-lg font-extrabold text-sidebar-primary">
+            M
+          </div>
         ) : (
           <img src={logo} alt="Manancial Máquinas" className="mx-auto w-40 py-2" />
         )}
@@ -55,7 +67,12 @@ function AppSidebar() {
             <SidebarMenu>
               {list.map((it) => (
                 <SidebarMenuItem key={it.url}>
-                  <SidebarMenuButton asChild isActive={path.startsWith(it.url)} tooltip={it.title} size="lg">
+                  <SidebarMenuButton
+                    asChild
+                    isActive={path.startsWith(it.url)}
+                    tooltip={it.title}
+                    size="lg"
+                  >
                     <Link to={it.url} onClick={() => setOpenMobile(false)}>
                       <it.icon />
                       <span>{it.title}</span>
@@ -71,7 +88,9 @@ function AppSidebar() {
         {!collapsed && (
           <div className="px-2 text-xs">
             <div className="truncate font-semibold">{profile?.nome}</div>
-            <div className="opacity-70">{roles.map((r) => ROLES[r]).join(", ") || "Sem perfil"}</div>
+            <div className="opacity-70">
+              {roles.map((r) => ROLES[r]).join(", ") || "Sem perfil"}
+            </div>
           </div>
         )}
         <SidebarMenu>
@@ -88,8 +107,13 @@ function AppSidebar() {
 }
 
 function Layout() {
-  const { session, loading, isStaff, profile, signOut } = useAuth();
-  if (loading) return <div className="grid min-h-screen place-items-center text-muted-foreground">Carregando...</div>;
+  const { session, loading, accessIssue, isStaff, profile, signOut } = useAuth();
+  if (loading)
+    return (
+      <div className="grid min-h-screen place-items-center text-muted-foreground">
+        Carregando...
+      </div>
+    );
   if (!session) return <Navigate to="/login" />;
   if (!isStaff)
     return (
@@ -100,9 +124,12 @@ function Layout() {
           <p className="mt-2 text-sm text-muted-foreground">
             {profile?.ativo === false
               ? "Seu usuário foi desativado."
-              : "Não foi possível carregar seu acesso. Tente sair e entrar novamente."}
+              : (accessIssue ??
+                "Não foi possível carregar seu acesso. Tente sair e entrar novamente.")}
           </p>
-          <Button className="mt-6" variant="outline" onClick={signOut}>Sair</Button>
+          <Button className="mt-6" variant="outline" onClick={signOut}>
+            Sair
+          </Button>
         </div>
       </div>
     );
@@ -114,7 +141,9 @@ function Layout() {
           <header className="sticky top-0 z-20 flex h-14 items-center gap-3 border-b bg-card/90 px-3 backdrop-blur">
             <SidebarTrigger />
             <img src={logo} alt="Manancial Máquinas" className="h-8 md:hidden" />
-            <span className="hidden text-sm font-semibold text-muted-foreground md:block">Gestão de Serviços Técnicos</span>
+            <span className="hidden text-sm font-semibold text-muted-foreground md:block">
+              Gestão de Serviços Técnicos
+            </span>
             <div className="ml-auto">
               <Button asChild variant="accent" size="sm">
                 <Link to="/os/nova">+ Nova OS</Link>
